@@ -14,10 +14,10 @@ export default function Index() {
                     headerRight: () => <DrawerToggleButton />
                 }}
             />
-            <Button
-                title="Toggle Drawer"
-                onPress={() => navigation.dispatch((DrawerActions.toggleDrawer()))}
-            />
+            {/*<Button*/}
+            {/*    title="Toggle Drawer"*/}
+            {/*    onPress={() => navigation.dispatch((DrawerActions.toggleDrawer()))}*/}
+            {/*/>*/}
         </View>
     );
 }
