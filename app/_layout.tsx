@@ -1,29 +1,94 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import "./globals.css"
+import {Drawer} from "expo-router/drawer";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import {
+    DrawerContentComponentProps,
+    DrawerContentScrollView,
+    DrawerItem,
+    DrawerItemList
+} from "@react-navigation/drawer";
+import {Pressable, Text, View} from "react-native";
+import {Image} from "expo-image";
+import {usePathname, useRouter} from "expo-router";
+import {useState} from "react";
+import {DrawerCategories, DrawerItemColor} from "@/constants/DrawerConfig";
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
+
+    const toggleExpand = (key: string) => {
+        setExpanded((prev) => ({...prev, [key]: !prev[key]}));
+    };
+
+    return (
+        <DrawerContentScrollView {...props}>
+            <View className="p-4 items-center">
+                <Image
+                    source={require("../assets/images/react-logo.png")}
+                    style={{width: 80, height: 80, borderRadius: 40}}
+                />
+                <Text className="text-lg font-bold mt-2">My School</Text>
+            </View>
+            <DrawerItemList {...props} />
+
+            {/*Render categories here*/}
+            {DrawerCategories.map((category) => (
+                <View className="px-4 mt-2" key={category.key}>
+                    <Pressable onPress={() => toggleExpand(category.key)}>
+                        <Text className="text-md font-semibold mb-2">{category.title}</Text>
+                    </Pressable>
+                    {expanded[category.key] &&
+                        category.subItems.map((sub) => (
+                            <View className="pl-4" key={sub.path}>
+                                <DrawerItem
+                                    label={sub.title}
+                                    focused={pathname === sub.path}
+                                    onPress={() => router.push(sub.path)}
+                                    activeTintColor={DrawerItemColor.activeTintColor}
+                                />
+                            </View>
+                        ))
+                    }
+                </View>
+            ))}
+        </DrawerContentScrollView>
+    )
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+    return (
+        <GestureHandlerRootView style={{flex: 1}}>
+            <Drawer
+                drawerContent={(props) => <CustomDrawerContent {...props} />}
+                screenOptions={{
+                    drawerActiveTintColor: DrawerItemColor.activeTintColor,
+                    drawerHideStatusBarOnOpen: true,
+                }}
+            >
+                <Drawer.Screen
+                    name="index"
+                    options={{
+                        drawerLabel: "Home",
+                        title: "Overview",
+                        drawerIcon: ({color, size}) => (
+                            <FontAwesome name="home" size={size} color={color}/>
+                        )
+                    }}
+                />
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+                {/*Hidden sub-routes from DrawerConfig*/}
+                {DrawerCategories.flatMap((category) =>
+                category.subItems.map((sub) => (
+                    <Drawer.Screen
+                        key={sub.path}
+                        name={sub.path.slice(1)} //removes leading '/'
+                        options={{drawerItemStyle: {display: 'none'}}}
+                    />
+                )))}
+            </Drawer>
+        </GestureHandlerRootView>
+    )
 }
