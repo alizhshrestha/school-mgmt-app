@@ -1,6 +1,8 @@
+
 export interface DrawerSubItem {
     title: string;
     path: any;
+    icon: any;
 }
 
 export interface DrawerCategory {
@@ -18,16 +20,16 @@ export const DrawerCategories: DrawerCategory[] = [
         key: "academics",
         title: "📚 Academics",
         subItems: [
-            { title: "Students", path: "/academics/students" },
-            { title: "Teachers", path: "/academics/teachers" },
+            { title: "Student", path: "/academics/students", icon: "graduation-cap" },
+            { title: "Teacher", path: "/academics/teachers", icon: "user"},
         ],
     },
     {
         key: "attendance",
         title: "📝 Attendance",
         subItems: [
-            { title: "Students", path: "/attendance/students" },
-            { title: "Teachers", path: "/attendance/teachers" },
+            { title: "Student", path: "/attendance/students", icon: "graduation-cap" },
+            { title: "Teacher", path: "/attendance/teachers",  icon: "user" },
         ],
     },
 ]

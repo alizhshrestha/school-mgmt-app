@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@theme {
+    --color-primary: #7C3AED;
+    --color-primary-light: #E9D5FF;
+
+    --color-accent-1: #60A5FA;
+    --color-accent-2: #FDBA74;
+    --color-accent-3: #34D399;
+
+    --color-text-main: #1F2937;
+    --color-text-muted: #6B7280;
+
+    --color-bg: #F9FAFB;
+    --color-card: #FFFFFF;
+    --color-border: #E5E7EB;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-main);
+}
+
+.card {
+    @apply bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition flex flex-col sm:flex-row justify-between sm:items-center;
+}
+
+.form-label{
+    @apply block font-medium mb-1;
+}

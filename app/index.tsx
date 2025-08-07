@@ -9,11 +9,11 @@ export default function Index() {
     return (
         <View>
             <Text>School Management</Text>
-            <Stack.Screen
-                options={{
-                    headerRight: () => <DrawerToggleButton />
-                }}
-            />
+            {/*<Stack.Screen*/}
+            {/*    options={{*/}
+            {/*        headerRight: () => <DrawerToggleButton />*/}
+            {/*    }}*/}
+            {/*/>*/}
             {/*<Button*/}
             {/*    title="Toggle Drawer"*/}
             {/*    onPress={() => navigation.dispatch((DrawerActions.toggleDrawer()))}*/}
