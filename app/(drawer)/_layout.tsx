@@ -13,10 +13,7 @@ import {Image} from "expo-image";
 import {usePathname, useRouter} from "expo-router";
 import {useState} from "react";
 import {DrawerCategories, DrawerItemColor} from "@/constants/DrawerConfig";
-import {red} from "react-native-reanimated/lib/typescript/Colors";
 import {Color} from "@/constants/ColorPallete";
-
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
     const router = useRouter();
@@ -52,8 +49,8 @@ const CustomDrawerContent: React.FC<DrawerContentComponentProps> = (props) => {
                                     focused={pathname === sub.path}
                                     onPress={() => router.push(sub.path)}
                                     activeTintColor={DrawerItemColor.activeTintColor}
-                                    icon={({color, size})=> (
-                                        <FontAwesome name={sub.icon} size={size} color={color} />
+                                    icon={({color, size}) => (
+                                        <FontAwesome name={sub.icon} size={size} color={color}/>
                                     )}
                                 />
                             </View>
@@ -79,34 +76,19 @@ export default function DrawerLayout() {
                     headerShadowVisible: false
                 }}
             >
-                {/*<Drawer.Screen*/}
-                {/*    name="index"*/}
-                {/*    options={{*/}
-                {/*        drawerLabel: "Home",*/}
-                {/*        title: "Overview",*/}
-                {/*        drawerIcon: ({color, size}) => (*/}
-                {/*            <FontAwesome name="home" size={size} color={color}/>*/}
-                {/*        )*/}Material
-                {/*    }}*/}
-                {/*/>*/}
 
                 {/*Hidden sub-routes from DrawerConfig*/}
                 {DrawerCategories.flatMap((category) =>
-                category.subItems.map((sub) => (
-                    <Drawer.Screen
-                        key={sub.path}
-                        name={sub.path.slice(1)}//removes leading '/'
-                        options={{
-                            drawerItemStyle: {display: 'none'},
-                            headerTitle: sub.title,
-                        }}
-                    />
-                )))}
-
-                {/*<Drawer.Screen*/}
-                {/*    name="academics/students/[id]" //removes leading '/'*/}
-                {/*    options={{drawerItemStyle: {display: 'none'}}}*/}
-                {/*/>*/}
+                    category.subItems.map((sub) => (
+                        <Drawer.Screen
+                            key={sub.path}
+                            name={sub.path.slice(1)}//removes leading '/'
+                            options={{
+                                drawerItemStyle: {display: 'none'},
+                                headerTitle: sub.title,
+                            }}
+                        />
+                    )))}
             </Drawer>
         </GestureHandlerRootView>
     )

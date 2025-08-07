@@ -26,9 +26,17 @@ const StudentsScreen = () => {
 
     return (
         <View className="flex-1 bg-[var(--color-bg)] p-4">
-            <Text className="text-xl font-bold text-[var(--color-text-main)] mb-4">
-                Students
-            </Text>
+            <View className="flex-row items-center justify-between mb-4">
+                <Text className="text-xl font-bold text-[var(--color-text-main)] mb-4">
+                    Students
+                </Text>
+                <TouchableOpacity onPress={() => router.push('/academics/students/add')}>
+                    <Text className="text-base font-semibold text-[var(--color-text-main)]">
+                        Add Student
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
 
             <FlatList
                 data={students}
